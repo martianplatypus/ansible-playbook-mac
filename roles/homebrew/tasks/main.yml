@@ -1,3 +1,5 @@
+---
+
 - name: Install homebrew
   shell: >
     /bin/bash -c "$(curl -fsSL {{ homebrew_download_url }})" < /dev/null
