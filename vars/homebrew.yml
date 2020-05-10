@@ -3,6 +3,7 @@ homebrew_installed_packages:
   - carthage
 
 homebrew_cask_apps:
+  - { name: atom, install_options:"appdir=/Applications" }  
   - { name: firefox, install_options:"appdir=/Applications" }
   - { name: github, install_options:"appdir=/Applications"}
   - { name: gpg-suite, install_options:"appdir=/Applications" }
