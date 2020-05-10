@@ -6,3 +6,4 @@ homebrew_cask_apps:
   - { name: firefox, install_options:"appdir=/Applications" }
   - { name: github, install_options:"appdir=/Applications"}
   - { name: gpg-suite, install_options:"appdir=/Applications" }
+  - { name: iterm2, install_options:"appdir=/Applications" }
