@@ -19,20 +19,18 @@ PYTHON3_PATH := $(HOME)/Library/Python/3.7/bin
 	clean
 
 install: \
-	install_pip \
-	install_ansible \
 	install_galaxy_roles \
 	install_commandlinetools \
 	install_homebrew \
 	install_ios
 
 
-install_pip:
-ifndef PIP_FOUND
-	curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
-	python get-pip.py --user --force-reinstall
-	rm -f get-pip.py
-endif
+# install_pip:
+# ifndef PIP_FOUND
+# 	curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
+# 	python get-pip.py --user --force-reinstall
+# 	rm -f get-pip.py
+# endif
 
 install_ansible:
 	@export PATH="$(PYTHON_PATH):$$PATH"; pip install --user --ignore-installed six ansible
@@ -44,10 +42,10 @@ install_commandlinetools:
 	@export PATH="$(PYTHON_PATH):$$PATH"; ansible-playbook main.yml -i inventory --tags "command-line-tools"
 
 install_homebrew:
-	@export PATH="$(PYTHON_PATH):$$PATH"; ansible-playbook main.yml -i inventory --tags "homebrew"
+	@export PATH="$(PYTHON_PATH):$$PATH"; ansible-playbook main.yml -i inventory --tags "homebrew" $(ARGS)
 
 install_ios:
-	@export PATH="$(PYTHON_PATH):$$PATH"; ansible-playbook main.yml -i inventory --tags "ios"
+	@export PATH="$(PYTHON_PATH):$$PATH"; ansible-playbook main.yml -i inventory --tags "ios" $(ARGS)
 
 install_python3:
 	@export PATH="$(PYTHON_PATH):$$PATH"; ansible-playbook main.yml -i inventory --tags "python3"
