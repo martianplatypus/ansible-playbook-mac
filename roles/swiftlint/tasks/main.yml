@@ -1,0 +1,12 @@
+---
+- name: Check Xcode path
+  command: xcode-select -p
+  register: xcode_select_path
+  changed_when: false
+
+- name: Install Swiftlint
+  homebrew:
+    name: swiftlint
+  when:
+    - xcode_select_path.stdout is defined
+    - '"Xcode" in xcode_select_path.stdout'

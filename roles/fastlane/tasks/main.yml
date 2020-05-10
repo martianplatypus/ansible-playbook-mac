@@ -1,0 +1,28 @@
+---
+- name: Set shell config file variable
+  set_fact:
+    shell_config_file: "{{ ansible_distribution_version is version(10.15, '<') | ternary ('.bashrc', '.zshrc') }}"
+
+- name: Check shell config file exists
+  stat:
+    path: "{{ ansible_env.HOME }}/{{ shell_config_file }}"
+  register: shell_config_file_stat
+
+- name: Create shell config file
+  file:
+    path: "{{ ansible_env.HOME }}/{{ shell_config_file }}"
+    state: touch
+    mode: u+rw
+  when: not ansible_check_mode
+  changed_when: shell_config_file_stat.stat is defined and not shell_config_file_stat.stat.exists
+
+- name: Set locale in shell configuration
+  lineinfile:
+    path: "{{ ansible_env.HOME }}/{{ shell_config_file }}"
+    line: "{{ item }}"
+  with_items:
+    - ""
+    - "# Set Locale"
+    - "export LC_ALL=en_US.UTF-8"
+    - "export LANG=en_US.UTF-8"
+  when: not ansible_check_mode

@@ -1,0 +1,8 @@
+---
+- name: Brew tap tmspzz/homebrew-tap
+  homebrew_tap:
+    name: tmspzz/homebrew-tap
+
+- name: Install Rome
+  homebrew:
+    name: tmspzz/homebrew-tap/rome
