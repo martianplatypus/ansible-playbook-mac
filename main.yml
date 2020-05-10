@@ -1,6 +1,10 @@
 ---
 - hosts: localhost
   connection: local
+  vars_files:
+    - vars/homebrew.yml
+    - vars/gems.yml
+    - vars/mas.yml
   roles:
     - role: elliotweiser.osx-command-line-tools
       tags: [bootstrap, command-line-tools]
@@ -10,3 +14,21 @@
 
     - role: martianplatypus.python_mac
       tags: [bootstrap, python3, python]
+
+    - role: martianplatypus.ruby_mac
+      tags: [ios, ruby, rvm]
+
+    - role: fastlane
+      tags: [ios, fastlane]
+
+    - role: rome
+      tags: [ios, rome]
+
+    - role: geerlingguy.mas
+      tags: [ios, mas]
+
+    - role: xcode
+      tags: [ios, xcode]
+
+    - role: swiftlint
+      tags: [ios, swiftlint]

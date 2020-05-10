@@ -1,0 +1,28 @@
+---
+- name: Check Xcode path
+  command: xcode-select -p
+  register: xcode_select_path
+  changed_when: false
+
+- name: Get Xcode required MacOS version
+  shell: |
+    set -o pipefail
+    mas info '{{ xcode_app_id }}' | awk '/Minimum OS:/{ print $3 }'
+  register: xcode_minimum_os_required
+  when:
+    - xcode_minimum_os_required.stdout is defined
+    - ansible_distribution_version is version(xcode_minimum_os_required.stdout, '>=')
+
+- name: Install Xcode if compatible
+  command: mas install "{{ xcode_app_id }}"
+  when:
+    - xcode_minimum_os_required.stdout is defined
+    - ansible_distribution_version is version(xcode_minimum_os_required.stdout, '>=')
+
+- name: Set xcode-select path
+  command: xcode-select -s {{ xcode_path }}
+  become: true
+  changed_when: false
+  when:
+    - xcode_select_path.stdout is defined
+    - '"Xcode" not in xcode_select_path.stdout'
